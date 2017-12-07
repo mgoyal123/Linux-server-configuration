@@ -1,43 +1,47 @@
-1) IP address and SSH port number of my server is : 52.66.183.142 and 2200
-2) The complete url to hosted Item catalog web application is : http://52.66.183.142
-3) list of softwares installed is as follows:
-	a) apache2
-	b) libapache2-mod-wsgi
-	c) postgresql
-	d) Python-pip
-	e) Flask, httplib2, requests, oauth2client, sqlalchemy
-	f) git
+# Linux Server Configuration
+### Quickstart
+* **IP address** and **SSH** port number of the server is : _52.66.183.142_ and _2200_
+* The complete **url to hosted Item catalog web application** is : _http://52.66.183.142_
+* List of softwares installed is as follows:
+	* apache2
+	* libapache2-mod-wsgi
+	* postgresql
+	* Python-pip
+	* Flask, httplib2, requests, oauth2client, sqlalchemy
+	* git
 
-4) list of configuration changes to make the server up and running are as under:
-	a) Change the ssh port from 22 to 2200
-		* On Amazon Lightsail homepage, open the networking tab and add a custom rule to allow tcp connection from port 2200.
-		* Then connect to your instance and run the following commands in order to configure the firewall.
-			i. sudo ufw default deny incoming
-			ii. sudo ufw default allow outgoing
-			iii. sudo ufw allow www
-			iv. sudo ufw allow ntp
-			v. sudo ufw allow 2200/tcp
-			vi. sudo ufw enable
+### Configuration
+* Change the ssh port from 22 to 2200
+	* On **Amazon Lightsail** homepage, open the networking tab and add a custom rule to allow tcp connection from port _2200_.
+	* Then connect to your instance and run the following commands in order to **configure the firewall**.
+		* `sudo ufw default deny incoming`
+		* `sudo ufw default allow outgoing`
+		* `sudo ufw allow www`
+		* `sudo ufw allow ntp`
+		* `sudo ufw allow 2200/tcp`
+		* `sudo ufw enable`
 
-	b) Create a new user grader by command "sudo adduser grader"
+* Create a **new user grader** by command `sudo adduser grader`
 
-	c) Give grader the permission to sudo by adding it in directory /etc/sudoers.d.
+* Give grader the **permission to sudo** by adding it in directory _/etc/sudoers.d_.
 
-	d) Create an ssh keypair for grader
-		* Run command "ssh-keygen" on your local machine and give a <name> to file when prompted for the same.
-		* Two files starting with given <name> and one of those ending with .pub extension will be created.
-		* login to the server and create a .ssh directoryin home folder by running command "mkdirectory.ssh"
-		* Run "cd .ssh" and create a new file by command "touch authorized_keys"
-		* Run "sudo vim authorized_keys" and paste the contents of file <name>.pub from local machine.
-		* logout and login with command ssh -i <name> grader@52.66.183.142 -p 2200
+* Create an **ssh keypair** for grader
+	* Run command `ssh-keygen` on your local machine and give a <name> to file when prompted for the same.
+	* Two files starting with given <name> and one of those ending with _.pub extension_ will be created.
+	* login to the server and create a **.ssh directory** in home folder by running command `mkdirectory.ssh`
+	* Run `cd .ssh` and create a new file by command `touch authorized_keys`
+	* Run `sudo vim authorized_keys` and paste the contents of file _<name>.pub_ from local machine.
+	* logout and login with command `ssh -i <name> grader@52.66.183.142 -p 2200`
 
+* Run `cd /var/www` and make a new directory _FlaskApp_ there by command `mkdir FlaskApp`
 
-	e) Run "cd /var/www" and make a new directory FlaskApp there by command "mkdir FlaskApp"
+* Run `cd FlaskApp` and **clone github repo** of Item Catalog app over there by running the command `git clone https://github.com/mgoyal123/Item-Catalog.git`
 
-	f) Run "cd FlaskApp" and clone github repo of Item Catalog app over there by running the command "git clone https://github.com/mgoyal123/Item-Catalog.git"
+* Add a **wsgi file** in _FlaskApp_ folder and a **FlaskApp.conf** file in _/etc/apache2/sites-available/_ folder.
 
-	g) Add a wsgi file in FlaskApp folder and a FlaskApp.conf file in /etc/apache2/sites-available/ folder.
+* Run command `sudo a2ensite FlaskApp.conf` and `sudo service apache2 restart` to **restart the apache** with current configurations.
 
-	h) Run command "sudo a2ensite FlaskApp.conf" and "sudo service apache2 restart" to restart the apache with current configurations.
+* Visit the site with ip _52.66.183.142_ on your browser.
 
-	i) Visit the site with ip "52.66.183.142" on your browser.
+### License
+The contents of this repository are covered under the MIT License.
